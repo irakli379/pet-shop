@@ -1,22 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAnimals, postAnimal } from "./animals.thunks";
+import { getAnimals, postAnimal, updateAnimal } from "./animals.thunks";
 
 const animalsInitialState = {
   animals: [],
   loading: false,
   error: null,
 };
-
-//   id: "",
-//   name: "",
-//   price: "",
-//   description: "",
-//   isPopular: false,
-//   stock: false,
-//   habitat: "",
-//   domestic: false,
-//   carnivore: false,
-//   endangered: false,
 
 const animalsSlice = createSlice({
   name: "animals",
@@ -47,38 +36,25 @@ const animalsSlice = createSlice({
       .addCase(postAnimal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(updateAnimal.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateAnimal.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.animals.findIndex(
+          (animal) => animal.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.animals[index] = action.payload; // Update the animal data in the array
+        }
+        state.error = null;
+      })
+      .addCase(updateAnimal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
-
-  //   {
-  //     [getAnimals.pending.type]: (state) => {
-  //       state.loading = true;
-  //     },
-  //     [getAnimals.fulfilled.type]: (state, action) => {
-  //       state.loading = false;
-  //       state.error = null;
-  //       state.animals = action.payload;
-  //     },
-  //     [getAnimals.rejected.type]: (state, action) => {
-  //       state.loading = false;
-  //       state.error = action.payload;
-  //     },
-  //   },
 });
 
 export default animalsSlice.reducer;
-
-// export const { addAnimal } = animalsSlice.actions;
-
-// export default function animalsReducer(state = animalsInitialState, action) {
-//   switch (action.type) {
-//     case "animal/add":
-//       return { ...state, animals: [...state.animals, action.payload] };
-//     default:
-//       return state;
-//   }
-// }
-
-// export function addAnimal(animal) {
-//   return { type: "animal/add", payload: animal };
-// }

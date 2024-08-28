@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAnimals = createAsyncThunk(
-  "/animals/GET",
+  "/animals/getAnimal",
   async (_, ThunkAPI) => {
     try {
       const res = await fetch("api/v1/animals", {
@@ -43,6 +43,36 @@ export const postAnimal = createAsyncThunk(
       // Catch any other errors and reject with a generic message
       return rejectWithValue({
         message: "An error occurred while posting the animal.",
+      });
+    }
+  }
+);
+
+export const updateAnimal = createAsyncThunk(
+  "animals/updateAnimal",
+  async (updatedAnimal, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`/api/v1/animals/${updatedAnimal.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        },
+        body: JSON.stringify(updatedAnimal),
+      });
+
+      if (!response.ok) {
+        // If the response status is not ok, reject the request
+        const error = await response.json();
+        return rejectWithValue(error);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      // Catch any other errors and reject with a generic message
+      return rejectWithValue({
+        message: "An error occurred while updating the animal.",
       });
     }
   }

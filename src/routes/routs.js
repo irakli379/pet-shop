@@ -5,6 +5,7 @@ import CategoriesList from "../pages/handleCategories/CategoriesList";
 import AddCategory from "../pages/handleCategories/AddCategory";
 import CategoryInfo from "../pages/handleCategories/CategoryInfo";
 import UpdateCategory from "../pages/handleCategories/UpdateCategory";
+import UpdateAnimal from "../pages/handleAnimals/UpdateAnimal";
 
 import MainPage from "../pages/MainPage";
 
@@ -24,6 +25,10 @@ const routes = [
   {
     element: <AddAnimal />,
     path: "/addAnimal",
+  },
+  {
+    element: <UpdateAnimal />,
+    path: "/updateAnimal/:animalId",
   },
   {
     element: <CategoriesList />,

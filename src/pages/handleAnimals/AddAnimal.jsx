@@ -45,7 +45,6 @@ export default function AddAnimal() {
       alert("The Price must be a valid number");
     } else {
       console.log("add animal");
-      // onAddAnimal(name, price, description, isPopular, stock, habitat, domestic, carnivore, endangered)
       dispatch(postAnimal(newAnimal));
     }
 
