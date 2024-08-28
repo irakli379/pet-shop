@@ -1,5 +1,12 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import routes from "./routes/routs";
+
 function App() {
-  return <h1>Pet Shop</h1>;
+  return (
+    <>
+      <RouterProvider router={createBrowserRouter(routes)}></RouterProvider>
+    </>
+  );
 }
 
 export default App;
