@@ -3,6 +3,7 @@ import PageNav from "../PageNav";
 import { useNavigate } from "react-router-dom";
 import { postAnimal } from "./animals.thunks";
 import { useDispatch } from "react-redux";
+import styles from "./AddAnimal.module.css"
 
 function isValidNumber(value) {
   const number = Number(value);
@@ -65,18 +66,22 @@ export default function AddAnimal() {
   return (
     <div>
       <PageNav />
-      <h1>Add Animal</h1>
-      <div className="inputs">
+
+      <div className={styles.pg_layout}>
+      
+      <h1 className={styles.page_header} >Add Animal</h1>
+            
+      <div className={styles.inputs}>
         <form onSubmit={handleSubmitAnimalForm}>
-          <div>
-            <label>Name: </label>
+          <div className={styles.fields}>
+            <label >Name: </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div>
+          <div className={styles.fields}>
             <label>Description: </label>
             <input
               type="text"
@@ -84,7 +89,7 @@ export default function AddAnimal() {
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <div>
+          <div className={styles.fields}>
             <label>Price: </label>
             <input
               type="text"
@@ -92,7 +97,7 @@ export default function AddAnimal() {
               onChange={(e) => setPrice(e.target.value)}
             />
           </div>
-          <div>
+          <div className={styles.fields}>
             <label>Is the animal popular: </label>
             <input
               type="checkbox"
@@ -100,7 +105,7 @@ export default function AddAnimal() {
               onChange={(e) => setIsPopular(e.target.checked)}
             />
           </div>
-          <div>
+          <div className={styles.fields}>
             <label>Stock: </label>
             <input
               type="checkbox"
@@ -109,7 +114,7 @@ export default function AddAnimal() {
               onChange={(e) => setStock(e.target.checked)}
             />
           </div>
-          <div>
+          <div className={styles.fields}>
             <label>Habitat: </label>
             <select
               value={habitat}
@@ -124,8 +129,8 @@ export default function AddAnimal() {
               <option value="antarctica">Antarctica</option>
               <option value="arctic">Arctic</option>
             </select>
-          </div>
-          <div>
+          </div >
+          <div className={styles.fields}>
             <label>Domestic: </label>
 
             <input
@@ -134,7 +139,7 @@ export default function AddAnimal() {
               onChange={(e) => setDomestic(e.target.checked)}
             />
           </div>
-          <div>
+          <div className={styles.fields}>
             <label>Carnivore: </label>
             <input
               type="checkbox"
@@ -142,7 +147,7 @@ export default function AddAnimal() {
               onChange={(e) => setCarnivore(e.target.checked)}
             />
           </div>
-          <div>
+          <div className={styles.fields}>
             <label>Endangered: </label>
             <input
               type="checkbox"
@@ -150,8 +155,11 @@ export default function AddAnimal() {
               onChange={(e) => setEndangered(e.target.checked)}
             />
           </div>
-          <button type="submit">Submit</button>
+          <div className={styles.btn_div}>
+          <button className={styles.button} type="submit">Submit</button>
+          </div>
         </form>
+      </div>
       </div>
     </div>
   );

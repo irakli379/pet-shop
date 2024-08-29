@@ -1,10 +1,13 @@
 import PageNav from "../PageNav";
+import styles from "./AnimalInfo.module.css"
 
 export default function AnimalInfo() {
   return (
     <div>
       <PageNav />
-      Animal Info
+      <div className={styles.header}>
+        Animal Info
+      </div>
     </div>
   );
 }

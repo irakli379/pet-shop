@@ -3,6 +3,7 @@ import PageNav from "../PageNav";
 import { getAnimals } from "./animals.thunks";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import styles from "./AnimalsList.module.css";
 
 export default function AnimalsList() {
   const animalsState = useSelector((state) => state.an.animals);
@@ -26,14 +27,16 @@ export default function AnimalsList() {
   return (
     <div>
       <PageNav />
-      <h1>Animals List</h1>
-      {animalsState.map((cf) => (
-        <div key={cf._uuid}>
-          <h3>{cf.name}</h3>
-          <Link to={`/updateAnimal/${cf._uuid}`}>Update Animal</Link>
-          <button onClick={() => deleteAnimal(cf._uuid)}>Delete</button>
-        </div>
+      <div className={styles.main_div}>
+        <h1 className={styles.header}>Animals List</h1>
+        {animalsState.map((cf) => (
+         <div className={styles.animals_list} key={cf._uuid}>
+            <h3 className={styles.animal}>{cf.name}</h3>
+            <Link className={styles.update} to={`/updateAnimal/${cf._uuid}`}>Update</Link>
+            <button className={styles.button} onClick={() => deleteAnimal(cf._uuid)}>Delete</button>
+          </div>
       ))}
+      </div>
     </div>
   );
 }

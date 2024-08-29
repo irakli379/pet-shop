@@ -1,0 +1,16 @@
+body {
+    background-color: darkolivegreen;
+    /* background-image: url("../images/pets_large.jpeg"); */
+}
+
+.div {
+    display: flex;
+    flex-direction: column;
+}
+
+.h1 {
+    align-self: center;
+    font-size: 30px;
+    font-weight: 700;
+    color:aquamarine
+}

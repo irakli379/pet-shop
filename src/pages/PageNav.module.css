@@ -1,0 +1,24 @@
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: darkslategray;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.link {
+    font-size: 20px;
+    font-weight: 400;
+    color: goldenrod;
+    font-style: normal;
+    padding: 10px;
+    text-decoration: none 
+}
+
+.link:hover {
+    color: gold;
+    font-weight: 700;
+    background-color:darkslateblue;
+}
+

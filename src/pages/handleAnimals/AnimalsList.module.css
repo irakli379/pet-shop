@@ -1,0 +1,61 @@
+.main_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    font-size: 30px;
+    font-weight: 700;
+    color: aquamarine;
+}
+
+.animals_list {
+    display: flex;
+    width: 600px;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between;
+    gap: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border:solid;
+    border-color: darkslategray;
+    background-color:cadetblue
+}
+
+.animal {
+    font-size: 20px;
+    font-weight: 600;
+    color:darkblue;
+    width: 80px;
+}
+
+.update {
+    padding: 10px;
+    color:darkblue;
+    background-color: antiquewhite;
+    text-decoration: none;
+    border: solid;
+    border-color: darkslategray;
+    border-radius: 5%;
+    border-width: 1px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.button {
+    padding: 10px;
+    color:darkblue;
+    background-color: antiquewhite;
+    text-decoration: none;
+    border: solid;
+    border-color: darkslategray;
+    border-radius: 5%;
+    border-width: 1px;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+}
