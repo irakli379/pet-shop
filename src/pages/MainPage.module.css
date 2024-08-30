@@ -1,6 +1,9 @@
 body {
     background-color: darkolivegreen;
-    /* background-image: url("../images/pets_large.jpeg"); */
+    /* background-image: url("../images/pets_large.jpeg");
+    background-position:center;
+    background-repeat: no-repeat;
+    background-size: cover; */
 }
 
 .div {
