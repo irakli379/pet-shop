@@ -14,13 +14,16 @@ export default function AddAnimal() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [isPopular, setIsPopular] = useState(false);
-  const [stock, setStock] = useState(false);
+  const [stock, setStock] = useState("");
   const [habitat, setHabitat] = useState("universal");
   const [domestic, setDomestic] = useState(false);
   const [carnivore, setCarnivore] = useState(false);
   const [endangered, setEndangered] = useState(false);
 
+  const [isInCategory, setIsInCategory] = useState(false);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const newAnimal = {
     name,
@@ -32,19 +35,19 @@ export default function AddAnimal() {
     domestic,
     carnivore,
     endangered,
+    isInCategory,
   };
-
-  const navigate = useNavigate();
 
   function handleSubmitAnimalForm(e) {
     e.preventDefault();
 
-    if (!name || !description || !price) {
+    if (!name || !description || !price || !stock) {
       alert("Fill all of the fields");
     } else if (!isValidNumber(price)) {
       alert("The Price must be a valid number");
+    } else if (!isValidNumber(stock) || stock < 0) {
+      alert("The stock must be a valid number");
     } else {
-      console.log("add animal");
       dispatch(postAnimal(newAnimal));
     }
 
@@ -52,13 +55,21 @@ export default function AddAnimal() {
     setDescription("");
     setPrice("");
     setIsPopular(false);
-    setStock(false);
+    setStock("");
     setHabitat("universal");
     setDomestic(false);
     setCarnivore(false);
     setEndangered(false);
 
-    if (!(!name || !description || !price || !isValidNumber(price)))
+    if (
+      !(
+        !name ||
+        !description ||
+        !price ||
+        !isValidNumber(price) ||
+        !isValidNumber(stock)
+      )
+    )
       navigate("/animalsList");
   }
 
@@ -103,10 +114,9 @@ export default function AddAnimal() {
           <div>
             <label>Stock: </label>
             <input
-              type="checkbox"
-              checked={stock}
+              type="text"
               value={stock}
-              onChange={(e) => setStock(e.target.checked)}
+              onChange={(e) => setStock(e.target.value)}
             />
           </div>
           <div>

@@ -3,14 +3,35 @@ import { Link } from "react-router-dom";
 export default function PageNav() {
   return (
     <nav>
-      <Link to="/">Main Page</Link>
-      <Link to="/animalsList">Animals List</Link>
-      <Link to="/animalInfo">Animal Info</Link>
-      <Link to="/addAnimal">Add Animal</Link>
-      <Link to="/CategoriesList">Categories List</Link>
-      <Link to="/addCategory">Add Category</Link>
-      <Link to="/categoryInfo">Category Info</Link>
-      <Link to="/updateCategory">Update Category</Link>
+      <ul
+        style={{
+          display: "flex",
+          gap: "30px",
+          border: "3px solid red",
+          padding: "10px",
+          justifyContent: "space-around",
+        }}
+      >
+        <li>
+          <Link to="/">Main Page</Link>
+        </li>
+        <li>
+          {" "}
+          <Link to="/animalsList">Animals List</Link>
+        </li>
+        <li>
+          {" "}
+          <Link to="/CategoriesList">Categories List</Link>
+        </li>
+        <li>
+          {" "}
+          <Link to="/wishList">Whislist</Link>
+        </li>
+        <li>
+          {" "}
+          <Link to="/cart">Cart</Link>
+        </li>
+      </ul>
     </nav>
   );
 }

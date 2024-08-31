@@ -6,8 +6,14 @@ import AddCategory from "../pages/handleCategories/AddCategory";
 import CategoryInfo from "../pages/handleCategories/CategoryInfo";
 import UpdateCategory from "../pages/handleCategories/UpdateCategory";
 import UpdateAnimal from "../pages/handleAnimals/UpdateAnimal";
+// import AddAnimalToCategory from "../pages/handleAnimals/AddAnimalToCategory";
 
 import MainPage from "../pages/MainPage";
+import AddAnimalToCategory from "../pages/handleAnimals/AddAnimalToCategory";
+import AboutUs from "../pages/AboutUs";
+import Donate from "../pages/Donate";
+import WishList from "../pages/handleCart/WishList";
+import Cart from "../pages/handleCart/Cart";
 
 const routes = [
   {
@@ -20,7 +26,7 @@ const routes = [
   },
   {
     element: <AnimalInfo />,
-    path: "/animalInfo",
+    path: "/animalInfo/:animalId",
   },
   {
     element: <AddAnimal />,
@@ -36,7 +42,7 @@ const routes = [
   },
   {
     element: <CategoryInfo />,
-    path: "/categoryInfo",
+    path: "/categoryInfo/:categoryId",
   },
   {
     element: <AddCategory />,
@@ -44,7 +50,27 @@ const routes = [
   },
   {
     element: <UpdateCategory />,
-    path: "/updateCategory",
+    path: "/updateCategory/:categoryId",
+  },
+  {
+    element: <AddAnimalToCategory />,
+    path: "/addAnimalToCategory/:animalId",
+  },
+  {
+    element: <AboutUs />,
+    path: "/aboutUs",
+  },
+  {
+    element: <Donate />,
+    path: "/donate",
+  },
+  {
+    element: <WishList />,
+    path: "/wishList",
+  },
+  {
+    element: <Cart />,
+    path: "/cart",
   },
 ];
 

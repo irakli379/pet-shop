@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import PageNav from "./PageNav";
 
 export default function MainPage() {
@@ -5,6 +6,7 @@ export default function MainPage() {
     <div>
       <PageNav />
       <h1>Main Page || Pet Shop</h1>
+      <Footer />
     </div>
   );
 }

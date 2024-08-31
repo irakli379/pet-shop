@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateAnimal } from "./animals.thunks";
+import PageNav from "../PageNav";
 
 function isValidNumber(value) {
   const number = Number(value);
@@ -15,11 +16,12 @@ export default function UpdateAnimal() {
     price: "",
     description: "",
     isPopular: false,
-    stock: false,
+    stock: "",
     habitat: "",
     domestic: false,
     carnivore: false,
     endangered: false,
+    isInCategory: false,
   });
 
   const navigate = useNavigate();
@@ -27,10 +29,7 @@ export default function UpdateAnimal() {
   const { animalId } = useParams();
   const dispatch = useDispatch();
 
-  console.log(animalId);
-
   function onGetAnimalId() {
-    // setIsLoading(true);
     fetch(`/api/v1/animals/${animalId}`, {
       method: "GET",
       headers: {
@@ -43,13 +42,7 @@ export default function UpdateAnimal() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         setCurAnimal({
-          Name: data.Name,
-          Description: data.Description,
-          Price: data.Price,
-          Id: data._uuid,
-          isVegan: data.isVegan,
           id: data._uuid,
           name: data.name,
           price: data.price,
@@ -60,10 +53,10 @@ export default function UpdateAnimal() {
           domestic: data.domestic,
           carnivore: data.carnivore,
           endangered: data.endangered,
+          isInCategory: data.isInCategory,
         });
       })
       .catch((error) => console.log(error));
-    // .finally(() => setIsLoading(false));
   }
 
   useEffect(function () {
@@ -73,9 +66,17 @@ export default function UpdateAnimal() {
   function handleUpdateAnimal(e) {
     e.preventDefault();
 
-    if (!curAnimal.name || !curAnimal.description || !curAnimal.price) {
+    if (
+      !curAnimal.name ||
+      !curAnimal.description ||
+      !curAnimal.price ||
+      !curAnimal.stock
+    ) {
       alert("Fill all of the fields");
-    } else if (!isValidNumber(curAnimal.price)) {
+    } else if (
+      !isValidNumber(curAnimal.price) ||
+      !isValidNumber(curAnimal.stock)
+    ) {
       alert("The Price must be a valid number");
     } else {
       dispatch(updateAnimal(curAnimal));
@@ -85,6 +86,7 @@ export default function UpdateAnimal() {
 
   return (
     <div>
+      <PageNav />
       Update Animal
       <div className="inputs">
         <form onSubmit={handleUpdateAnimal}>
@@ -127,15 +129,17 @@ export default function UpdateAnimal() {
               type="checkbox"
               checked={curAnimal.isPopular}
               onChange={(e) =>
-                setCurAnimal((prev) => ({ ...prev, isPopular: e.target.value }))
+                setCurAnimal((prev) => ({
+                  ...prev,
+                  isPopular: e.target.checked,
+                }))
               }
             />
           </div>
           <div>
             <label>Stock: </label>
             <input
-              type="checkbox"
-              checked={curAnimal.stock}
+              type="text"
               value={curAnimal.stock}
               onChange={(e) =>
                 setCurAnimal((prev) => ({ ...prev, stock: e.target.value }))
@@ -167,7 +171,10 @@ export default function UpdateAnimal() {
               type="checkbox"
               checked={curAnimal.domestic}
               onChange={(e) =>
-                setCurAnimal((prev) => ({ ...prev, domestic: e.target.value }))
+                setCurAnimal((prev) => ({
+                  ...prev,
+                  domestic: e.target.checked,
+                }))
               }
             />
           </div>
@@ -177,7 +184,10 @@ export default function UpdateAnimal() {
               type="checkbox"
               checked={curAnimal.carnivore}
               onChange={(e) =>
-                setCurAnimal((prev) => ({ ...prev, carnivore: e.target.value }))
+                setCurAnimal((prev) => ({
+                  ...prev,
+                  carnivore: e.target.checked,
+                }))
               }
             />
           </div>
@@ -189,7 +199,7 @@ export default function UpdateAnimal() {
               onChange={(e) =>
                 setCurAnimal((prev) => ({
                   ...prev,
-                  endangered: e.target.value,
+                  endangered: e.target.checked,
                 }))
               }
             />

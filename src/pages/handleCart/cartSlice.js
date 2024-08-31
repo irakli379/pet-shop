@@ -1,22 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAnimals, postAnimal, updateAnimal } from "./animals.thunks";
+import { getAnimals, updateAnimal } from "../handleAnimals/animals.thunks";
 
-const animalsInitialState = {
+// { animalName: "", amount: 0 }
+
+const cartInitialState = {
   animals: [],
+  //   animalNum: { animalName: "", count: 0, stockAn: 0 },
   loading: false,
   error: null,
 };
 
-const animalsSlice = createSlice({
-  name: "animals",
-  initialState: animalsInitialState,
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: cartInitialState,
   reducers: {
-    loaderTrue(state) {
-      state.loading = true;
+    addToWishList(state, action) {},
+    addToCart(state, action) {},
+    addOneToCart(state, action) {
+      const animal = state.animals.find((anp) => anp.id === action.payload.id);
+      if (animal) {
+        animal.count += 1;
+        animal.stock -= 1; // Decrease the stock by 1
+      }
     },
-    loaderFalse(state) {
-      state.loading = false;
-    },
+    subtractOneFromCart(state, action) {},
+    addAllToCart(state, action) {},
+    byuNow(state, action) {},
   },
   extraReducers: (builder) => {
     builder
@@ -26,21 +35,17 @@ const animalsSlice = createSlice({
       .addCase(getAnimals.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.animals = action.payload;
+        // state.animals = action.payload;
+        state.animals = action.payload.map((anim) => {
+          return {
+            name: anim.name,
+            stock: anim.stock,
+            count: 0,
+            id: anim._uuid,
+          };
+        });
       })
       .addCase(getAnimals.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(postAnimal.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(postAnimal.fulfilled, (state, action) => {
-        state.loading = false;
-        state.animals.push(action.payload);
-        state.error = null;
-      })
-      .addCase(postAnimal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -64,5 +69,12 @@ const animalsSlice = createSlice({
   },
 });
 
-export default animalsSlice.reducer;
-export const { loaderFalse, loaderTrue } = animalsSlice.actions;
+export default cartSlice.reducer;
+export const {
+  addAllToCart,
+  addToWishList,
+  addToCart,
+  byuNow,
+  addOneToCart,
+  subtractOneFromCart,
+} = cartSlice.actions;
