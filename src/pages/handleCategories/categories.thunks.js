@@ -20,7 +20,20 @@ export const getCategories = createAsyncThunk(
 
 export const postCategory = createAsyncThunk(
   "categories/postCategory",
-  async (newCategory, { rejectWithValue }) => {
+  async (newCategory, { getState, rejectWithValue }) => {
+    const { categories } = getState().categories;
+
+    // Check if an animal with the same name (case-insensitive) already exists
+    const existingcategory = categories.find(
+      (category) =>
+        category.name.toLowerCase() === newCategory.name.toLowerCase()
+    );
+
+    if (existingcategory) {
+      return rejectWithValue({
+        message: "A category with this name already exists.",
+      });
+    }
     try {
       const response = await fetch("/api/v1/categories", {
         method: "POST",

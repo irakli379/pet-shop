@@ -5,7 +5,7 @@ import { getAnimals, updateAnimal } from "../handleAnimals/animals.thunks";
 
 const cartInitialState = {
   animals: [],
-  //   animalNum: { animalName: "", count: 0, stockAn: 0 },
+  //   animals: { name: "", count: 0, stock: 0, id: '' },
   loading: false,
   error: null,
 };
@@ -14,18 +14,18 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: cartInitialState,
   reducers: {
-    addToWishList(state, action) {},
-    addToCart(state, action) {},
     addOneToCart(state, action) {
       const animal = state.animals.find((anp) => anp.id === action.payload.id);
       if (animal) {
         animal.count += 1;
-        animal.stock -= 1; // Decrease the stock by 1
       }
     },
-    subtractOneFromCart(state, action) {},
-    addAllToCart(state, action) {},
-    byuNow(state, action) {},
+    subtractOneFromCart(state, action) {
+      const animal = state.animals.find((anp) => anp.id === action.payload.id);
+      if (animal) {
+        animal.count -= 1;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,11 +70,4 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const {
-  addAllToCart,
-  addToWishList,
-  addToCart,
-  byuNow,
-  addOneToCart,
-  subtractOneFromCart,
-} = cartSlice.actions;
+export const { addOneToCart, subtractOneFromCart } = cartSlice.actions;

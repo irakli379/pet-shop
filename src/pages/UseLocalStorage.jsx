@@ -1,15 +1,44 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const UseLocalStorage = (key, fallback) => {
-  const [value, setValue] = useState(
-    JSON.parse(localStorage.getItem(key)) ?? fallback
-  );
+function useLocalStorage(key, initialValue) {
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.error("Error accessing localStorage:", error);
+      return initialValue;
+    }
+  });
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [value, key]);
+  const setValue = (value) => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.error("Error setting localStorage value:", error);
+    }
+  };
 
-  return [value, setValue];
-};
+  const addToWishlist = (animalName) => {
+    const lowercaseName = animalName.toLowerCase();
+    if (!storedValue.includes(lowercaseName)) {
+      setValue([...storedValue, lowercaseName]);
+    }
+  };
 
-export default UseLocalStorage;
+  const removeFromWishlist = (animalName) => {
+    const lowercaseName = animalName.toLowerCase();
+    setValue(storedValue.filter((name) => name !== lowercaseName));
+  };
+
+  const isInWishlist = (animalName) => {
+    return storedValue.includes(animalName.toLowerCase());
+  };
+
+  return [storedValue, addToWishlist, removeFromWishlist, isInWishlist];
+}
+
+export default useLocalStorage;

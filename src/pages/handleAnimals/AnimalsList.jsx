@@ -22,7 +22,7 @@ export default function AnimalsList() {
 
   useEffect(() => {
     dispatch(getAnimals());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>

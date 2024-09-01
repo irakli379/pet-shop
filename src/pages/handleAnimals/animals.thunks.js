@@ -18,9 +18,52 @@ export const getAnimals = createAsyncThunk(
   }
 );
 
+// export const postAnimal = createAsyncThunk(
+//   "animals/postAnimal",
+//   async (newAnimal, { rejectWithValue }) => {
+//     try {
+//       const response = await fetch("/api/v1/animals", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+//         },
+//         body: JSON.stringify([newAnimal]),
+//       });
+
+//       if (!response.ok) {
+//         // If the response status is not ok, reject the request
+//         const error = await response.json();
+//         return rejectWithValue(error);
+//       }
+
+//       const data = await response.json();
+//       return data;
+//     } catch (error) {
+//       // Catch any other errors and reject with a generic message
+//       return rejectWithValue({
+//         message: "An error occurred while posting the animal.",
+//       });
+//     }
+//   }
+// );
+
 export const postAnimal = createAsyncThunk(
   "animals/postAnimal",
-  async (newAnimal, { rejectWithValue }) => {
+  async (newAnimal, { getState, rejectWithValue }) => {
+    const { animals } = getState().animals;
+
+    // Check if an animal with the same name (case-insensitive) already exists
+    const existingAnimal = animals.find(
+      (animal) => animal.name.toLowerCase() === newAnimal.name.toLowerCase()
+    );
+
+    if (existingAnimal) {
+      return rejectWithValue({
+        message: "An animal with this name already exists.",
+      });
+    }
+
     try {
       const response = await fetch("/api/v1/animals", {
         method: "POST",
@@ -32,15 +75,14 @@ export const postAnimal = createAsyncThunk(
       });
 
       if (!response.ok) {
-        // If the response status is not ok, reject the request
         const error = await response.json();
+        console.log("not gooddd");
         return rejectWithValue(error);
       }
 
       const data = await response.json();
       return data;
     } catch (error) {
-      // Catch any other errors and reject with a generic message
       return rejectWithValue({
         message: "An error occurred while posting the animal.",
       });

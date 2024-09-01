@@ -42,7 +42,9 @@ const animalsSlice = createSlice({
       })
       .addCase(postAnimal.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        alert("An animal with this name already exists.");
+
+        state.error = action.payload?.message || "Failed to add the animal.";
       })
       .addCase(updateAnimal.pending, (state) => {
         state.loading = true;

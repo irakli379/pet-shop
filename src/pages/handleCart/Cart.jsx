@@ -1,22 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import PageNav from "../PageNav";
 import { getAnimals } from "../handleAnimals/animals.thunks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Spinner from "../Spinner";
-import UseLocalStorage from "../UseLocalStorage";
-import { addOneToCart } from "./cartSlice";
+import { addOneToCart, subtractOneFromCart } from "./cartSlice";
 
 export default function Cart() {
-  const [numInCart, setNumInCart] = useState(0);
+  const cartState = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAnimals());
   }, [dispatch]);
 
-  const cartState = useSelector((state) => state.cart);
-
-  async function minusOneToAnimal(animal) {
+  async function minusToAnimal(animal) {
     try {
       const response = await fetch(`/api/v1/animals/${animal.id}`, {
         method: "PUT",
@@ -24,7 +22,7 @@ export default function Cart() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
         },
-        body: JSON.stringify({ stock: animal.stock - 1 }),
+        body: JSON.stringify({ stock: animal.stock - animal.count }),
       });
 
       if (!response.ok) {
@@ -35,16 +33,33 @@ export default function Cart() {
     }
   }
 
-  console.log(cartState);
-
-  async function handleAddOne(e, animal) {
+  function handleAddOne(e, animal) {
     e.preventDefault();
     if (animal.stock > 0) {
-      await minusOneToAnimal(animal); // Update the stock on the server
-      dispatch(addOneToCart({ id: animal.id })); // Update the cart state locally
+      dispatch(addOneToCart({ id: animal.id }));
+      console.log(cartState);
     }
+  }
 
-    dispatch(getAnimals()); // Optionally re-fetch the updated animals
+  function handleMinusOne(e, animal) {
+    e.preventDefault();
+    if (animal.count > 0) {
+      dispatch(subtractOneFromCart({ id: animal.id }));
+      console.log(cartState);
+    }
+  }
+
+  function handleBuyNow(e) {
+    e.preventDefault();
+    const animalsNeededToBeUpdated = cartState.animals.filter(
+      (anim) => anim.count > 0
+    );
+    animalsNeededToBeUpdated.forEach((element) => {
+      minusToAnimal(element);
+    });
+    setTimeout(() => {
+      dispatch(getAnimals());
+    }, 100);
   }
 
   return (
@@ -59,14 +74,14 @@ export default function Cart() {
             ? cartState.animals.map((animal) => (
                 <div key={animal.id}>
                   <div>
-                    {animal.name} {animal.stock} {numInCart}
+                    {animal.name} {animal.stock} {animal.count}
                   </div>
-                  <button onClick={(e) => handleAddOne(e, animal)}>
-                    Add one
-                  </button>
+                  <button onClick={(e) => handleMinusOne(e, animal)}>-</button>
+                  <button onClick={(e) => handleAddOne(e, animal)}>+</button>
                 </div>
               ))
             : ""}
+          <button onClick={handleBuyNow}>Buy Now</button>
         </div>
       )}
     </>

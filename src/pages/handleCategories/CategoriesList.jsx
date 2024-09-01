@@ -9,7 +9,6 @@ export default function CategoriesList() {
   const categoriesState = useSelector((state) => state.ca);
 
   const dispatch = useDispatch();
-  console.log(categoriesState);
 
   function deleteCategory(category) {
     fetch(`/api/v1/categories/${category}`, {
