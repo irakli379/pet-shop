@@ -1,0 +1,68 @@
+.container {
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.addCategoryLink {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.addCategoryLink:hover {
+  background-color: #0056b3;
+}
+
+.emptyMessage {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #777;
+}
+
+.categoryCard {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.categoryTitle {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.updateLink,
+.infoLink {
+  display: inline-block;
+  margin-right: 10px;
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.updateLink:hover,
+.infoLink:hover {
+  color: #0056b3;
+}
+
+.deleteButton {
+  padding: 8px 12px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}

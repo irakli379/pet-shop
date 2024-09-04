@@ -42,8 +42,7 @@ const animalsSlice = createSlice({
       })
       .addCase(postAnimal.rejected, (state, action) => {
         state.loading = false;
-        alert("An animal with this name already exists.");
-
+        alert("Animal with that name already exists");
         state.error = action.payload?.message || "Failed to add the animal.";
       })
       .addCase(updateAnimal.pending, (state) => {
@@ -55,7 +54,7 @@ const animalsSlice = createSlice({
           (animal) => animal.id === action.payload.id
         );
         if (index !== -1) {
-          state.animals[index] = action.payload; // Update the animal data in the array
+          state.animals[index] = action.payload;
         }
         state.error = null;
       })

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import PageNav from "../PageNav";
 import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
+import styles from "./AnimalInfo.module.css";
 
 export default function AnimalInfo() {
   const { animalId } = useParams();
@@ -30,7 +31,7 @@ export default function AnimalInfo() {
       },
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Somethyng went wrong.");
+        if (!res.ok) throw new Error("Something went wrong.");
         return res.json();
       })
       .then((data) => {
@@ -56,25 +57,46 @@ export default function AnimalInfo() {
   }, []);
 
   return (
-    <div>
+    <>
       <PageNav />
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <>
-          <ul>
-            <li>Name: {curAnimal.name}</li>
-            <li>Description: {curAnimal.description}</li>
-            <li>Price: {curAnimal.price}</li>
-            <li>Habitat: {curAnimal.habitat}</li>
-            <li>{curAnimal.domestic ? "Domestic" : "Wilde"}</li>
-            <li>{curAnimal.isPopular ? "Popular" : "Not popular"}</li>
-            <li>{curAnimal.carnivore ? "Carnivore" : "Herbivore"}</li>
-            <li>{curAnimal.endangered ? "Endangered" : "Not endangered"}</li>
-            <li>Stock: {curAnimal.stock}</li>
+      <div className={styles.container}>
+        {isLoading ? (
+          <Spinner className={styles.spinner} />
+        ) : (
+          <ul className={styles.animalInfoList}>
+            <li className={styles.animalInfoItem}>
+              <span>Name:</span> {curAnimal.name}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Description:</span> {curAnimal.description}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Price:</span> {curAnimal.price}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Habitat:</span> {curAnimal.habitat}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Domestic:</span> {curAnimal.domestic ? "Domestic" : "Wild"}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Popularity:</span>{" "}
+              {curAnimal.isPopular ? "Popular" : "Not popular"}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Diet:</span>{" "}
+              {curAnimal.carnivore ? "Carnivore" : "Herbivore"}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Endangered:</span>{" "}
+              {curAnimal.endangered ? "Endangered" : "Not endangered"}
+            </li>
+            <li className={styles.animalInfoItem}>
+              <span>Stock:</span> {curAnimal.stock}
+            </li>
           </ul>
-        </>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }

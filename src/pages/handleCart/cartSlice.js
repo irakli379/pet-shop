@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAnimals, updateAnimal } from "../handleAnimals/animals.thunks";
 
-// { animalName: "", amount: 0 }
-
 const cartInitialState = {
   animals: [],
-  //   animals: { name: "", count: 0, stock: 0, id: '' },
   loading: false,
   error: null,
+  isLoggedIn: JSON.parse(localStorage.getItem("logged")) ?? false,
 };
 
 const cartSlice = createSlice({
@@ -26,6 +24,10 @@ const cartSlice = createSlice({
         animal.count -= 1;
       }
     },
+    loginToggle(state) {
+      state.isLoggedIn = !state.isLoggedIn;
+      localStorage.setItem("logged", JSON.stringify(state.isLoggedIn));
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -35,7 +37,6 @@ const cartSlice = createSlice({
       .addCase(getAnimals.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        // state.animals = action.payload;
         state.animals = action.payload.map((anim) => {
           return {
             name: anim.name,
@@ -70,4 +71,5 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const { addOneToCart, subtractOneFromCart } = cartSlice.actions;
+export const { addOneToCart, subtractOneFromCart, loginToggle } =
+  cartSlice.actions;

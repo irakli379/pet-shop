@@ -1,0 +1,115 @@
+/* Container Styles */
+.container {
+  padding: 20px;
+  background-color: #e8f5e9; /* Light green background */
+}
+
+/* Grid Layout for Cards */
+.animalList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Card Styles */
+.animalCard {
+  background-color: #ffffff; /* White background for the card */
+  border: 2px solid #81c784; /* Light green border */
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items */
+  justify-content: center;
+  text-align: center;
+}
+
+.animalCard:hover {
+  transform: scale(1.05); /* Slightly scale up on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Animal Title */
+.animalCard h3 {
+  font-size: 1.5rem;
+  color: #388e3c; /* Darker green color for the title */
+  margin-bottom: 15px;
+}
+
+/* Action Buttons and Links */
+.animalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Reduced gap between buttons */
+}
+
+.animalLink,
+.animalButton {
+  background-color: #2196f3; /* Blue background */
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px; /* Reduced padding for smaller buttons */
+  border-radius: 8px;
+  font-size: 0.8rem; /* Smaller font size */
+  text-align: center;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.animalLink:hover,
+.animalButton:hover {
+  background-color: #1976d2; /* Darker blue on hover */
+}
+
+.addAnimalLink {
+  display: block;
+  margin-bottom: 20px;
+  background-color: #ff5722; /* Orange background for 'Add Animal' button */
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px; /* Reduced padding for smaller button */
+  border-radius: 8px;
+  font-size: 0.8rem; /* Smaller font size */
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.addAnimalLink:hover {
+  background-color: #e64a19; /* Darker orange on hover */
+}
+
+/* Delete Button Styles */
+.animalButton {
+  background-color: #f44336; /* Red for delete button */
+}
+
+.animalButton:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .animalList {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .animalCard {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .animalLink,
+  .animalButton,
+  .addAnimalLink {
+    font-size: 0.7rem; /* Even smaller font size on very small screens */
+    padding: 6px 10px; /* Further reduced padding */
+  }
+}

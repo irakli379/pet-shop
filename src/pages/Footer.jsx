@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
+import styles from "./Footer.module.css";
 
 export default function Footer() {
   return (
-    <>
-      <Link to={"/donate"}>Donate</Link>
-      <Link to={"/aboutUs"}>About Us</Link>
-    </>
+    <footer className={styles.footer}>
+      <Link to="/donate" className={styles.footerLink}>
+        Donate
+      </Link>
+      <Link to="/aboutUs" className={styles.footerLink}>
+        About Us
+      </Link>
+    </footer>
   );
 }

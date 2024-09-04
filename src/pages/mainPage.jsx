@@ -1,12 +1,28 @@
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "./Footer";
 import PageNav from "./PageNav";
+import { loginToggle } from "./handleCart/cartSlice";
+import styles from "./MainPage.module.css";
 
 export default function MainPage() {
+  const cartState = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
   return (
-    <div>
-      <PageNav />
-      <h1>Main Page || Pet Shop</h1>
-      <Footer />
+    <div className={styles.container}>
+      <div className={styles.navigation}>
+        <PageNav />
+      </div>
+      <header className={styles.header}>
+        <h1>Welcome to Pet Shop</h1>
+        <button
+          className={styles.button}
+          onClick={() => dispatch(loginToggle())}
+        >
+          {cartState.isLoggedIn ? "Log out" : "Log in"}
+        </button>
+      </header>
+      <Footer className={styles.footer} />
     </div>
   );
 }

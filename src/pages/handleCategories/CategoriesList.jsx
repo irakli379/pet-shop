@@ -4,9 +4,11 @@ import { getCategories } from "./categories.thunks";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../Spinner";
+import styles from "./CategoriesList.module.css"; // Import the CSS module
 
 export default function CategoriesList() {
   const categoriesState = useSelector((state) => state.ca);
+  const cartState = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -25,40 +27,43 @@ export default function CategoriesList() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <PageNav />
-      <Link to={"/addCategory"}>Add Category</Link>
+      {cartState.isLoggedIn && (
+        <Link to={"/addCategory"} className={styles.addCategoryLink}>
+          Add Category
+        </Link>
+      )}
       {categoriesState.loading ? (
         <Spinner />
       ) : categoriesState.categories.length === 0 ? (
-        <h4>Add a Categoory</h4>
+        <h4 className={styles.emptyMessage}>Add a Category</h4>
       ) : (
         categoriesState.categories.map((cf) => (
-          <div key={cf._uuid}>
-            <h3>{cf.title}</h3>
-            <Link to={`/updateCategory/${cf._uuid}`}>Update Animal</Link>
-            <Link to={`/categoryInfo/${cf._uuid}`}>See Info</Link>
-            <button onClick={() => deleteCategory(cf._uuid)}>Delete</button>
+          <div key={cf._uuid} className={styles.categoryCard}>
+            <h3 className={styles.categoryTitle}>{cf.title}</h3>
+            {cartState.isLoggedIn && (
+              <Link
+                to={`/updateCategory/${cf._uuid}`}
+                className={styles.updateLink}
+              >
+                Update Category
+              </Link>
+            )}
+            <Link to={`/categoryInfo/${cf._uuid}`} className={styles.infoLink}>
+              See Info
+            </Link>
+            {cartState.isLoggedIn && (
+              <button
+                onClick={() => deleteCategory(cf._uuid)}
+                className={styles.deleteButton}
+              >
+                Delete
+              </button>
+            )}
           </div>
         ))
       )}
     </div>
   );
 }
-
-// const handleAddOne = useCallback(
-//   function (e, animal) {
-//     e.preventDefault();
-//     minusOneToAnimal(animal);
-//     dispatch(getAnimals());
-//   },
-//   [dispatch]
-// );
-
-// useEffect(()=> {
-//   function handleAddOne(e, animal) {
-//       e.preventDefault();
-//       minusOneToAnimal(animal);
-//       dispatch(getAnimals());
-//     }
-// }, [])

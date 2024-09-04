@@ -46,7 +46,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(postCategory.rejected, (state, action) => {
         state.loading = false;
-        alert("A category with this title already exists.");
+        alert("A category with that title already exists");
         state.error = action.payload;
       })
       .addCase(updateCategory.pending, (state) => {
@@ -70,4 +70,3 @@ const categoriesSlice = createSlice({
 });
 
 export default categoriesSlice.reducer;
-// export const { loaderFalse, loaderTrue } = categoriesSlice.actions;

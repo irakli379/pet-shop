@@ -1,0 +1,81 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.animalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.animalName,
+.animalStock,
+.animalCount {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.buyNowButton {
+  background-color: #28a745;
+  color: white;
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  align-self: center;
+}
+
+.buyNowButton:hover {
+  background-color: #218838;
+}

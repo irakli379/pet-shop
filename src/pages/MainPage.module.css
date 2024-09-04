@@ -1,0 +1,66 @@
+/* Container for the entire page */
+.container {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Navigation Styles */
+.navigation {
+  background-color: #4caf50; /* Primary color */
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+.header {
+  background-image: url("../../public/row-tops-heads-cats-dogs-260nw-1034939470.png"); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Button Styles */
+.button {
+  background-color: #ffc107; /* Secondary color */
+  color: #333333; /* Text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 20px 0;
+}
+
+.button:hover {
+  background-color: #ffb300; /* Darker shade of secondary color */
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #333333; /* Dark background for footer */
+  color: #f9f9f9; /* Light text color */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    font-size: 2rem;
+    padding: 40px 20px;
+  }
+
+  .button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

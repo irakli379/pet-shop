@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../Spinner";
+import styles from "./AddAnimalToCategory.module.css";
+import PageNav from "../PageNav";
 
 export default function AddAnimalToCategory() {
   const [isLoading, setIsLoading] = useState(true);
-
   const [curCategories, setCurCategories] = useState([]);
   const [curAnimal, setCurAnimal] = useState({
     id: "",
@@ -33,22 +34,20 @@ export default function AddAnimalToCategory() {
       },
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Somethyng went wrong.");
+        if (!res.ok) throw new Error("Something went wrong.");
         return res.json();
       })
       .then((data) => {
         setCurCategories(
-          data.items.map((category) => {
-            return {
-              id: category._uuid,
-              title: category.title,
-              description: category.description,
-              animalClass: category.animalClass,
-              family: category.family,
-              extinct: category.extinct,
-              animals: category.animals,
-            };
-          })
+          data.items.map((category) => ({
+            id: category._uuid,
+            title: category.title,
+            description: category.description,
+            animalClass: category.animalClass,
+            family: category.family,
+            extinct: category.extinct,
+            animals: category.animals,
+          }))
         );
       })
       .catch((error) => console.log(error))
@@ -64,7 +63,7 @@ export default function AddAnimalToCategory() {
       },
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Somethyng went wrong.");
+        if (!res.ok) throw new Error("Something went wrong.");
         return res.json();
       })
       .then((data) => {
@@ -85,12 +84,12 @@ export default function AddAnimalToCategory() {
       .catch((error) => console.log(error));
   }
 
-  useEffect(function () {
+  useEffect(() => {
     onGetCategories();
     onGetAnimalId();
-  }, []);
+  }, [animalId]);
 
-  function onUpdateCtegories(categoryId) {
+  function onUpdateCategories(categoryId) {
     fetch(`/api/v1/categories/${categoryId.id}`, {
       method: "PUT",
       headers: {
@@ -106,27 +105,33 @@ export default function AddAnimalToCategory() {
   function HandleAddToCategory(e, categoryId) {
     e.preventDefault();
     if (!categoryId.animals.includes(curAnimal.name))
-      onUpdateCtegories(categoryId);
+      onUpdateCategories(categoryId);
 
     navigate("/categoriesList");
   }
 
   return (
     <>
-      <h1>{curAnimal.name}</h1>
-      <div>
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          curCategories.map((cf) => (
-            <div key={cf._uuid}>
-              <h3>{cf.title}</h3>
-              <button onClick={(e) => HandleAddToCategory(e, cf)}>
-                Add the Animal to {cf.title}
-              </button>
-            </div>
-          ))
-        )}
+      <PageNav />
+      <div className={styles.container}>
+        <h1>{curAnimal.name}</h1>
+        <div className={styles.categoryList}>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            curCategories.map((cf) => (
+              <div key={cf.id} className={styles.categoryItem}>
+                <h3>{cf.title}</h3>
+                <button
+                  onClick={(e) => HandleAddToCategory(e, cf)}
+                  className={styles.categoryButton}
+                >
+                  Add the Animal to {cf.title}
+                </button>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </>
   );

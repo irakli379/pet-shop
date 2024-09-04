@@ -1,0 +1,93 @@
+/* Container Styles */
+.container {
+  padding: 20px;
+  background-color: #f1f8e9; /* Light green background */
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading Styles */
+h1 {
+  font-size: 2rem;
+  color: #388e3c; /* Dark green for the title */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Category List Styles */
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Category Item Styles */
+.categoryItem {
+  background-color: #ffffff; /* White background for category items */
+  border: 2px solid #81c784; /* Light green border */
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.categoryItem:hover {
+  transform: scale(1.02); /* Slightly scale up on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Category Title Styles */
+.categoryItem h3 {
+  font-size: 1.25rem;
+  color: #388e3c; /* Darker green for category title */
+  margin-bottom: 10px;
+}
+
+/* Button Styles */
+.categoryButton {
+  background-color: #2196f3; /* Blue background for button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  display: block;
+  margin: 0 auto; /* Center button horizontally */
+}
+
+.categoryButton:hover {
+  background-color: #1976d2; /* Darker blue on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .categoryList {
+    gap: 10px;
+  }
+
+  .categoryButton {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .categoryButton {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+  }
+}

@@ -2,10 +2,17 @@ import { useParams } from "react-router-dom";
 import PageNav from "../PageNav";
 import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCategory } from "./categories.thunks";
+import styles from "./CategoryInfo.module.css";
 
 export default function CategoryInfo() {
+  const cartState = useSelector((state) => state.cart);
+
   const { categoryId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch();
 
   const [curCategory, setCurCategory] = useState({
     id: "",
@@ -27,7 +34,7 @@ export default function CategoryInfo() {
       },
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Somethyng went wrong.");
+        if (!res.ok) throw new Error("Something went wrong.");
         return res.json();
       })
       .then((data) => {
@@ -49,46 +56,79 @@ export default function CategoryInfo() {
     onGetCategoryId();
   }, []);
 
-  console.log(curCategory.animals);
+  function handleRemoveFromAnimals(e, animalToRemove) {
+    e.preventDefault();
+    const updatedAnimals = curCategory.animals.filter(
+      (animal) => animal !== animalToRemove
+    );
+
+    const updatedCategory = {
+      ...curCategory,
+      animals: updatedAnimals,
+    };
+
+    dispatch(updateCategory(updatedCategory))
+      .then(() => {
+        setCurCategory(updatedCategory);
+      })
+      .catch((error) => console.error("Failed to remove animal:", error));
+    onGetCategoryId();
+  }
 
   return (
-    <div>
+    <div className={styles.container}>
       <PageNav />
-      <h1>Category Info</h1>
+      <h1 className={styles.title}>Category Info</h1>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
-          <ul>
-            <li>Title: {curCategory.title}</li>
-            <li>Description: {curCategory.description}</li>
-
-            {curCategory.animalClass === "other" ? (
-              ""
-            ) : (
-              <li>{`Animal Class: ${curCategory.animalClass}`}</li>
+          <ul className={styles.categoryInfo}>
+            <li className={styles.categoryItem}>
+              <strong>Title:</strong> {curCategory.title}
+            </li>
+            <li className={styles.categoryItem}>
+              <strong>Description:</strong> {curCategory.description}
+            </li>
+            {curCategory.animalClass !== "other" && (
+              <li className={styles.categoryItem}>
+                <strong>Animal Class:</strong> {curCategory.animalClass}
+              </li>
             )}
-
-            {curCategory.family === "other" ? (
-              ""
-            ) : (
-              <li>{`Family: ${curCategory.family}`}</li>
+            {curCategory.family !== "other" && (
+              <li className={styles.categoryItem}>
+                <strong>Family:</strong> {curCategory.family}
+              </li>
             )}
-
-            <li>{curCategory.extinct ? "Extinct" : "Not extinct"}</li>
-
-            {curCategory.animals === undefined ? (
-              ""
-            ) : curCategory.animals.length > 0 ? (
-              <ul>
+            <li className={styles.categoryItem}>
+              <strong>Status:</strong>{" "}
+              {curCategory.extinct ? "Extinct" : "Not extinct"}
+            </li>
+          </ul>
+          {curCategory.animals && curCategory.animals.length > 0 && (
+            <div className={styles.animalList}>
+              <h2 className={styles.animalListTitle}>
+                Animals in this Category
+              </h2>
+              <ul className={styles.animalCards}>
                 {curCategory.animals.map((animal) => (
-                  <li>{animal}</li>
+                  <li key={animal} className={styles.animalCard}>
+                    <div className={styles.animalCardContent}>
+                      <span className={styles.animalName}>{animal}</span>
+                      {cartState.isLoggedIn && (
+                        <button
+                          onClick={(e) => handleRemoveFromAnimals(e, animal)}
+                          className={styles.removeButton}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  </li>
                 ))}
               </ul>
-            ) : (
-              ""
-            )}
-          </ul>
+            </div>
+          )}
         </>
       )}
     </div>

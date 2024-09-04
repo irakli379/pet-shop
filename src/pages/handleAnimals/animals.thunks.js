@@ -18,53 +18,36 @@ export const getAnimals = createAsyncThunk(
   }
 );
 
-// export const postAnimal = createAsyncThunk(
-//   "animals/postAnimal",
-//   async (newAnimal, { rejectWithValue }) => {
-//     try {
-//       const response = await fetch("/api/v1/animals", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
-//         },
-//         body: JSON.stringify([newAnimal]),
-//       });
-
-//       if (!response.ok) {
-//         // If the response status is not ok, reject the request
-//         const error = await response.json();
-//         return rejectWithValue(error);
-//       }
-
-//       const data = await response.json();
-//       return data;
-//     } catch (error) {
-//       // Catch any other errors and reject with a generic message
-//       return rejectWithValue({
-//         message: "An error occurred while posting the animal.",
-//       });
-//     }
-//   }
-// );
+const fetchAnimals = async () => {
+  const response = await fetch("/api/v1/animals", {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+    },
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+  return response.json();
+};
 
 export const postAnimal = createAsyncThunk(
   "animals/postAnimal",
-  async (newAnimal, { getState, rejectWithValue }) => {
-    const { animals } = getState().animals;
-
-    // Check if an animal with the same name (case-insensitive) already exists
-    const existingAnimal = animals.find(
-      (animal) => animal.name.toLowerCase() === newAnimal.name.toLowerCase()
-    );
-
-    if (existingAnimal) {
-      return rejectWithValue({
-        message: "An animal with this name already exists.",
-      });
-    }
-
+  async (newAnimal, { rejectWithValue }) => {
     try {
+      const { items: animals } = await fetchAnimals();
+
+      const existingAnimal = animals.find(
+        (animal) => animal.name.toLowerCase() === newAnimal.name.toLowerCase()
+      );
+
+      if (existingAnimal) {
+        return rejectWithValue({
+          message: "An animal with this name already exists.",
+        });
+      }
+
       const response = await fetch("/api/v1/animals", {
         method: "POST",
         headers: {
@@ -76,7 +59,6 @@ export const postAnimal = createAsyncThunk(
 
       if (!response.ok) {
         const error = await response.json();
-        console.log("not gooddd");
         return rejectWithValue(error);
       }
 
@@ -84,7 +66,7 @@ export const postAnimal = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue({
-        message: "An error occurred while posting the animal.",
+        message: error.message || "An error occurred while posting the animal.",
       });
     }
   }
@@ -104,7 +86,6 @@ export const updateAnimal = createAsyncThunk(
       });
 
       if (!response.ok) {
-        // If the response status is not ok, reject the request
         const error = await response.json();
         return rejectWithValue(error);
       }
@@ -112,7 +93,6 @@ export const updateAnimal = createAsyncThunk(
       const data = await response.json();
       return data;
     } catch (error) {
-      // Catch any other errors and reject with a generic message
       return rejectWithValue({
         message: "An error occurred while updating the animal.",
       });

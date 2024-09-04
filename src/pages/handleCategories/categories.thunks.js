@@ -18,23 +18,37 @@ export const getCategories = createAsyncThunk(
   }
 );
 
+const fetchCategories = async () => {
+  const response = await fetch("/api/v1/categories", {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+    },
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+  return response.json();
+};
+
 export const postCategory = createAsyncThunk(
   "categories/postCategory",
-  async (newCategory, { getState, rejectWithValue }) => {
-    const { categories } = getState().categories;
-
-    // Check if an animal with the same name (case-insensitive) already exists
-    const existingcategory = categories.find(
-      (category) =>
-        category.name.toLowerCase() === newCategory.name.toLowerCase()
-    );
-
-    if (existingcategory) {
-      return rejectWithValue({
-        message: "A category with this name already exists.",
-      });
-    }
+  async (newCategory, { rejectWithValue }) => {
     try {
+      const { items: categories } = await fetchCategories();
+
+      const existingCategory = categories.find(
+        (category) =>
+          category.title.toLowerCase() === newCategory.title.toLowerCase()
+      );
+
+      if (existingCategory) {
+        return rejectWithValue({
+          message: "A category with this name already exists.",
+        });
+      }
+
       const response = await fetch("/api/v1/categories", {
         method: "POST",
         headers: {
@@ -45,7 +59,6 @@ export const postCategory = createAsyncThunk(
       });
 
       if (!response.ok) {
-        // If the response status is not ok, reject the request
         const error = await response.json();
         return rejectWithValue(error);
       }
@@ -53,9 +66,9 @@ export const postCategory = createAsyncThunk(
       const data = await response.json();
       return data;
     } catch (error) {
-      // Catch any other errors and reject with a generic message
       return rejectWithValue({
-        message: "An error occurred while posting the category.",
+        message:
+          error.message || "An error occurred while posting the category.",
       });
     }
   }
@@ -75,7 +88,6 @@ export const updateCategory = createAsyncThunk(
       });
 
       if (!response.ok) {
-        // If the response status is not ok, reject the request
         const error = await response.json();
         return rejectWithValue(error);
       }
@@ -83,7 +95,6 @@ export const updateCategory = createAsyncThunk(
       const data = await response.json();
       return data;
     } catch (error) {
-      // Catch any other errors and reject with a generic message
       return rejectWithValue({
         message: "An error occurred while updating the animal.",
       });

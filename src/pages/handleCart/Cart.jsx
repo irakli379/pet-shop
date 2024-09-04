@@ -4,14 +4,38 @@ import { getAnimals } from "../handleAnimals/animals.thunks";
 import { useEffect } from "react";
 import Spinner from "../Spinner";
 import { addOneToCart, subtractOneFromCart } from "./cartSlice";
+import useLocalStorage from "../UseLocalStorage";
+import styles from "./Cart.module.css"; // Import the CSS module
 
 export default function Cart() {
   const cartState = useSelector((state) => state.cart);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAnimals());
+    async function fetchData() {
+      const item = window.localStorage.getItem("cartlist");
+      const cartlist = item ? JSON.parse(item) : [];
+
+      function addToCart(i) {
+        if (Array.isArray(i) && i.length > 0) {
+          i.forEach((e) => {
+            const animal = cartState.animals.find((anp) => anp.name === e);
+            if (animal) {
+              dispatch(addOneToCart(animal));
+            }
+          });
+        }
+      }
+
+      try {
+        await dispatch(getAnimals());
+        await addToCart(cartlist);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
   }, [dispatch]);
 
   async function minusToAnimal(animal) {
@@ -37,7 +61,6 @@ export default function Cart() {
     e.preventDefault();
     if (animal.stock > 0) {
       dispatch(addOneToCart({ id: animal.id }));
-      console.log(cartState);
     }
   }
 
@@ -45,9 +68,10 @@ export default function Cart() {
     e.preventDefault();
     if (animal.count > 0) {
       dispatch(subtractOneFromCart({ id: animal.id }));
-      console.log(cartState);
     }
   }
+
+  const [, , , , cleatCartlist] = useLocalStorage("cartlist", []);
 
   function handleBuyNow(e) {
     e.preventDefault();
@@ -57,33 +81,59 @@ export default function Cart() {
     animalsNeededToBeUpdated.forEach((element) => {
       minusToAnimal(element);
     });
+    cleatCartlist("cartlist");
     setTimeout(() => {
       dispatch(getAnimals());
     }, 100);
+    alert("You have successfully bought your animals");
   }
 
   return (
     <>
       <PageNav />
-      <h1>Cart</h1>
-      {cartState.loading ? (
-        <Spinner />
-      ) : (
-        <div>
-          {cartState.animals && cartState.animals.length > 0
-            ? cartState.animals.map((animal) => (
-                <div key={animal.id}>
-                  <div>
-                    {animal.name} {animal.stock} {animal.count}
+      <div className={styles.container}>
+        <h1 className={styles.heading}>Cart</h1>
+        {cartState.loading ? (
+          <Spinner />
+        ) : (
+          <div className={styles.cartItems}>
+            {cartState.animals && cartState.animals.length > 0
+              ? cartState.animals.map((animal) => (
+                  <div key={animal.id} className={styles.cartItem}>
+                    <div className={styles.animalInfo}>
+                      <div className={styles.animalName}>
+                        Animal Name: {animal.name}
+                      </div>
+                      <div className={styles.animalStock}>
+                        In Stock: {animal.stock}
+                      </div>
+                      <div className={styles.animalCount}>
+                        In Cart: {animal.count}
+                      </div>
+                    </div>
+                    <div className={styles.buttons}>
+                      <button
+                        className={styles.button}
+                        onClick={(e) => handleMinusOne(e, animal)}
+                      >
+                        -
+                      </button>
+                      <button
+                        className={styles.button}
+                        onClick={(e) => handleAddOne(e, animal)}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                  <button onClick={(e) => handleMinusOne(e, animal)}>-</button>
-                  <button onClick={(e) => handleAddOne(e, animal)}>+</button>
-                </div>
-              ))
-            : ""}
-          <button onClick={handleBuyNow}>Buy Now</button>
-        </div>
-      )}
+                ))
+              : ""}
+            <button className={styles.buyNowButton} onClick={handleBuyNow}>
+              Buy Now
+            </button>
+          </div>
+        )}
+      </div>
     </>
   );
 }

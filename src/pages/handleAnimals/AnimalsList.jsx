@@ -4,9 +4,11 @@ import { getAnimals } from "./animals.thunks";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../Spinner";
+import styles from "./AnimalsList.module.css";
 
 export default function AnimalsList() {
   const animalsState = useSelector((state) => state.an);
+  const cartState = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -17,36 +19,76 @@ export default function AnimalsList() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
       },
-    }).then(() => dispatch(getAnimals()));
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete animal");
+        }
+        return response.json();
+      })
+      .then(() => dispatch(getAnimals()))
+      .catch((error) => console.error("Error deleting animal:", error));
   }
 
   useEffect(() => {
     dispatch(getAnimals());
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <PageNav />
-      <Link to={"/addAnimal"}>Add Animal</Link>
-      {/* <h1>Animals List</h1> */}
+      {cartState.isLoggedIn && (
+        <Link to="/addAnimal" className={styles.addAnimalLink}>
+          Add Animal
+        </Link>
+      )}
       {animalsState.loading ? (
         <Spinner />
       ) : (
-        animalsState.animals.map((cf) => (
-          <div key={cf._uuid}>
-            <h3>{cf.name}</h3>
-            <Link to={`/updateAnimal/${cf._uuid}`}>Update Animal</Link>
-            <Link to={`/animalInfo/${cf._uuid}`}>See Info</Link>
-            <button onClick={() => deleteAnimal(cf._uuid)}>Delete</button>
-            {animalsState.isInCategory ? (
-              ""
-            ) : (
-              <Link to={`/addAnimalToCategory/${cf._uuid}`}>
-                Add to Category
-              </Link>
-            )}
-          </div>
-        ))
+        <div className={styles.animalList}>
+          {animalsState.animals.length > 0 ? (
+            animalsState.animals.map((cf) => (
+              <div key={cf._uuid} className={styles.animalCard}>
+                <h3>{cf.name}</h3>
+                <div className={styles.animalActions}>
+                  {cartState.isLoggedIn && (
+                    <Link
+                      to={`/updateAnimal/${cf._uuid}`}
+                      className={styles.animalLink}
+                    >
+                      Update Animal
+                    </Link>
+                  )}
+                  <Link
+                    to={`/animalInfo/${cf._uuid}`}
+                    className={styles.animalLink}
+                  >
+                    See Info
+                  </Link>
+
+                  {cartState.isLoggedIn && (
+                    <>
+                      <button
+                        onClick={() => deleteAnimal(cf._uuid)}
+                        className={styles.animalButton}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={`/addAnimalToCategory/${cf._uuid}`}
+                        className={styles.animalLink}
+                      >
+                        Add to Category
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No animals found.</p>
+          )}
+        </div>
       )}
     </div>
   );

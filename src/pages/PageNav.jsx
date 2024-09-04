@@ -1,36 +1,68 @@
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import styles from "./PageNav.module.css";
 
 export default function PageNav() {
+  const cartState = useSelector((state) => state.cart);
+  const location = useLocation();
+
   return (
-    <nav>
-      <ul
-        style={{
-          display: "flex",
-          gap: "30px",
-          border: "3px solid red",
-          padding: "10px",
-          justifyContent: "space-around",
-        }}
-      >
-        <li>
-          <Link to="/">Main Page</Link>
+    <nav className={styles.navbar}>
+      <ul className={styles.navList}>
+        <li className={styles.navItem}>
+          <Link
+            to="/"
+            className={`${styles.navLink} ${
+              location.pathname === "/" ? styles.activeLink : ""
+            }`}
+          >
+            Main Page
+          </Link>
         </li>
-        <li>
-          {" "}
-          <Link to="/animalsList">Animals List</Link>
+        <li className={styles.navItem}>
+          <Link
+            to="/animalsList"
+            className={`${styles.navLink} ${
+              location.pathname === "/animalsList" ? styles.activeLink : ""
+            }`}
+          >
+            Animals List
+          </Link>
         </li>
-        <li>
-          {" "}
-          <Link to="/CategoriesList">Categories List</Link>
+        <li className={styles.navItem}>
+          <Link
+            to="/CategoriesList"
+            className={`${styles.navLink} ${
+              location.pathname === "/CategoriesList" ? styles.activeLink : ""
+            }`}
+          >
+            Categories List
+          </Link>
         </li>
-        <li>
-          {" "}
-          <Link to="/wishList">Whislist</Link>
-        </li>
-        <li>
-          {" "}
-          <Link to="/cart">Cart</Link>
-        </li>
+        {cartState.isLoggedIn && (
+          <>
+            <li className={styles.navItem}>
+              <Link
+                to="/wishList"
+                className={`${styles.navLink} ${
+                  location.pathname === "/wishList" ? styles.activeLink : ""
+                }`}
+              >
+                Wishlist
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link
+                to="/cart"
+                className={`${styles.navLink} ${
+                  location.pathname === "/cart" ? styles.activeLink : ""
+                }`}
+              >
+                Cart
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

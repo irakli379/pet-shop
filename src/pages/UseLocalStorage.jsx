@@ -22,11 +22,22 @@ function useLocalStorage(key, initialValue) {
     }
   };
 
-  const addToWishlist = (animalName) => {
-    const lowercaseName = animalName.toLowerCase();
-    if (!storedValue.includes(lowercaseName)) {
-      setValue([...storedValue, lowercaseName]);
-    }
+  // const addToWishlist = (animalName) => {
+  //   const lowercaseName = animalName.toLowerCase();
+  //   if (!storedValue.includes(lowercaseName)) {
+  //     setValue([...storedValue, lowercaseName]);
+  //   }
+  // };
+
+  const addToWishlist = (animals) => {
+    const newItems = Array.isArray(animals) ? animals : [animals];
+    const lowercaseItems = newItems.map((name) => name.toLowerCase());
+
+    const newCartList = [
+      ...storedValue,
+      ...lowercaseItems.filter((name) => !storedValue.includes(name)),
+    ];
+    setValue(newCartList);
   };
 
   const removeFromWishlist = (animalName) => {
@@ -38,7 +49,17 @@ function useLocalStorage(key, initialValue) {
     return storedValue.includes(animalName.toLowerCase());
   };
 
-  return [storedValue, addToWishlist, removeFromWishlist, isInWishlist];
+  function clearLocalStorageItem(itemKey) {
+    window.localStorage.setItem(itemKey, JSON.stringify([]));
+  }
+
+  return [
+    storedValue,
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+    clearLocalStorageItem,
+  ];
 }
 
 export default useLocalStorage;
