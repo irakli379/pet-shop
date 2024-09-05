@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import PageNav from "./PageNav";
 import { useDispatch, useSelector } from "react-redux";
 import { getAnimals } from "./handleAnimals/animals.thunks";
-import styles from "./AboutUs.module.css"; // Import the CSS module
+import styles from "./AboutUs.module.css";
 
 export default function AboutUs() {
   const animalsState = useSelector((state) => state.an);
