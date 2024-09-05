@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCategory } from "./categories.thunks";
 import styles from "./CategoryInfo.module.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function CategoryInfo() {
   const cartState = useSelector((state) => state.cart);
 
@@ -26,7 +28,7 @@ export default function CategoryInfo() {
 
   function onGetCategoryId() {
     setIsLoading(true);
-    fetch(`/api/v1/categories/${categoryId}`, {
+    fetch(`${API_URL}/api/v1/categories/${categoryId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

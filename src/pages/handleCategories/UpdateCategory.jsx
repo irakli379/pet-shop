@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { updateCategory } from "./categories.thunks";
 import styles from "./UpdateCategory.module.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function UpdateCategory() {
   const [curCategory, setCurCategory] = useState({
     id: "",
@@ -21,7 +23,7 @@ export default function UpdateCategory() {
   const dispatch = useDispatch();
 
   function onGetCategoryId() {
-    fetch(`/api/v1/categories/${categoryId}`, {
+    fetch(`${API_URL}/api/v1/categories/${categoryId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

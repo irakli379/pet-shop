@@ -30,6 +30,17 @@
   border-radius: 5px;
 }
 
+.cartItemZero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f3bfbf;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+}
+
 .animalInfo {
   display: flex;
   flex-direction: column;

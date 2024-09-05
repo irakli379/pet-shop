@@ -1,10 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export const getAnimals = createAsyncThunk(
   "/animals/getAnimal",
   async (_, ThunkAPI) => {
     try {
-      const res = await fetch("api/v1/animals", {
+      const res = await fetch(`${API_URL}/api/v1/animals`, {
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
@@ -19,7 +21,7 @@ export const getAnimals = createAsyncThunk(
 );
 
 const fetchAnimals = async () => {
-  const response = await fetch("/api/v1/animals", {
+  const response = await fetch(`${API_URL}/api/v1/animals`, {
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
@@ -48,7 +50,7 @@ export const postAnimal = createAsyncThunk(
         });
       }
 
-      const response = await fetch("/api/v1/animals", {
+      const response = await fetch(`${API_URL}/api/v1/animals`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,14 +78,17 @@ export const updateAnimal = createAsyncThunk(
   "animals/updateAnimal",
   async (updatedAnimal, { rejectWithValue }) => {
     try {
-      const response = await fetch(`/api/v1/animals/${updatedAnimal.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
-        },
-        body: JSON.stringify(updatedAnimal),
-      });
+      const response = await fetch(
+        `${API_URL}/api/v1/animals/${updatedAnimal.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          },
+          body: JSON.stringify(updatedAnimal),
+        }
+      );
 
       if (!response.ok) {
         const error = await response.json();

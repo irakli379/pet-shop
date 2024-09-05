@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
 import styles from "./AnimalInfo.module.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function AnimalInfo() {
   const { animalId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +25,7 @@ export default function AnimalInfo() {
 
   function onGetAnimalId() {
     setIsLoading(true);
-    fetch(`/api/v1/animals/${animalId}`, {
+    fetch(`${API_URL}/api/v1/animals/${animalId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

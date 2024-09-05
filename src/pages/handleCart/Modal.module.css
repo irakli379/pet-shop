@@ -1,0 +1,126 @@
+/* Full-screen overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it’s on top of other elements */
+}
+
+/* Modal box styling */
+.modal {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  text-align: center;
+  z-index: 1001; /* Above the overlay */
+}
+
+/* Close button styling */
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #ff5c5c;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.closeButton:hover {
+  background: #ff3b3b;
+}
+
+/* Content area styling */
+.content {
+  margin-top: 20px;
+  font-size: 1.1em;
+  color: #333;
+}
+
+/* Colorful ribbon styling */
+.ribbon {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  width: 120px;
+  height: 30px;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b); /* Colorful gradient */
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for the ribbon */
+}
+
+/* Buy button styling */
+.buyButton {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-top: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.buyButton:hover {
+  background: linear-gradient(45deg, #ff6699, #ff4b2b);
+}
+
+/* Animal name with colorful underline */
+.animalName {
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+}
+
+.animalName:nth-child(1) {
+  text-decoration-color: #ff416c; /* First animal: red underline */
+}
+
+.animalName:nth-child(2) {
+  text-decoration-color: #42a5f5; /* Second animal: blue underline */
+}
+
+.animalName:nth-child(3) {
+  text-decoration-color: #66bb6a; /* Third animal: green underline */
+}
+
+.animalName:nth-child(4) {
+  text-decoration-color: #ffa726; /* Fourth animal: orange underline */
+}
+
+.animalName:nth-child(5) {
+  text-decoration-color: #ab47bc; /* Fifth animal: purple underline */
+}
+
+/* Optional: Add some transition for smooth closing */
+.modal {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.overlay {
+  transition: opacity 0.3s ease;
+}

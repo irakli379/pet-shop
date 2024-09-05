@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Spinner from "../Spinner";
 import styles from "./AnimalsList.module.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function AnimalsList() {
   const animalsState = useSelector((state) => state.an);
   const cartState = useSelector((state) => state.cart);
@@ -13,7 +15,7 @@ export default function AnimalsList() {
   const dispatch = useDispatch();
 
   function deleteAnimal(animal) {
-    fetch(`/api/v1/animals/${animal}`, {
+    fetch(`${API_URL}/api/v1/animals/${animal}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

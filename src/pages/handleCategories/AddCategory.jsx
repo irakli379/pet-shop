@@ -3,7 +3,7 @@ import PageNav from "../PageNav";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postCategory } from "./categories.thunks";
-import styles from "./AddCategory.module.css"; // Import the CSS module
+import styles from "./AddCategory.module.css";
 
 export default function AddCategory() {
   const [title, setTitle] = useState("");
@@ -25,7 +25,7 @@ export default function AddCategory() {
   };
 
   function handleSubmitCategoryForm(e) {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
     if (!title || !description || !animalClass || !family) {
       alert("Fill all of the fields");
     } else {
@@ -122,7 +122,7 @@ export default function AddCategory() {
               <option value="Phocidae">Phocidae (True Seals)</option>
               <option value="Odobenidae">Odobenidae (Walrus)</option>
               <option value="other">
-                Other (extinct or prehistoric family of species)
+                Other (extinct, prehistoric orother family of species)
               </option>
             </select>
           </div>

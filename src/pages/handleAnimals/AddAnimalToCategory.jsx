@@ -4,6 +4,8 @@ import Spinner from "../Spinner";
 import styles from "./AddAnimalToCategory.module.css";
 import PageNav from "../PageNav";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function AddAnimalToCategory() {
   const [isLoading, setIsLoading] = useState(true);
   const [curCategories, setCurCategories] = useState([]);
@@ -26,7 +28,7 @@ export default function AddAnimalToCategory() {
 
   function onGetCategories() {
     setIsLoading(true);
-    fetch("/api/v1/categories", {
+    fetch(`${API_URL}/api/v1/categories`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +57,7 @@ export default function AddAnimalToCategory() {
   }
 
   function onGetAnimalId() {
-    fetch(`/api/v1/animals/${animalId}`, {
+    fetch(`${API_URL}/api/v1/animals/${animalId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +92,7 @@ export default function AddAnimalToCategory() {
   }, [animalId]);
 
   function onUpdateCategories(categoryId) {
-    fetch(`/api/v1/categories/${categoryId.id}`, {
+    fetch(`${API_URL}/api/v1/categories/${categoryId.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

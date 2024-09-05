@@ -10,6 +10,8 @@ function isValidNumber(value) {
   return !isNaN(number) && isFinite(number);
 }
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function UpdateAnimal() {
   const [curAnimal, setCurAnimal] = useState({
     id: "",
@@ -31,7 +33,7 @@ export default function UpdateAnimal() {
   const dispatch = useDispatch();
 
   function onGetAnimalId() {
-    fetch(`/api/v1/animals/${animalId}`, {
+    fetch(`${API_URL}/api/v1/animals/${animalId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -87,174 +89,179 @@ export default function UpdateAnimal() {
   }
 
   return (
-    <div className={styles.container}>
+    <>
       <PageNav className={styles.pageNav} />
-      <h1>Update Animal</h1>
-      <form onSubmit={handleUpdateAnimal} className={styles.form}>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Name:</label>
-          <input
-            type="text"
-            value={curAnimal.name}
-            onChange={(e) =>
-              setCurAnimal((prev) => ({ ...prev, name: e.target.value }))
-            }
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Description:</label>
-          <input
-            type="text"
-            value={curAnimal.description}
-            onChange={(e) =>
-              setCurAnimal((prev) => ({
-                ...prev,
-                description: e.target.value,
-              }))
-            }
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Price:</label>
-          <input
-            type="text"
-            value={curAnimal.price}
-            onChange={(e) =>
-              setCurAnimal((prev) => ({ ...prev, price: e.target.value }))
-            }
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Is the animal popular:</label>
-          <div className={styles.checkboxWrapper}>
+      <div className={styles.container}>
+        <h1>Update Animal</h1>
+        <form onSubmit={handleUpdateAnimal} className={styles.form}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Name:</label>
             <input
-              type="checkbox"
-              id="isPopular"
-              checked={curAnimal.isPopular}
+              type="text"
+              value={curAnimal.name}
+              onChange={(e) =>
+                setCurAnimal((prev) => ({ ...prev, name: e.target.value }))
+              }
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Description:</label>
+            <input
+              type="text"
+              value={curAnimal.description}
               onChange={(e) =>
                 setCurAnimal((prev) => ({
                   ...prev,
-                  isPopular: e.target.checked,
+                  description: e.target.value,
                 }))
               }
-              className={styles.checkbox}
+              className={styles.input}
             />
-            <label
-              htmlFor="isPopular"
-              className={styles.customCheckbox}
-            ></label>
-            <label htmlFor="isPopular" className={styles.checkboxLabel}>
-              Popular
-            </label>
           </div>
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Stock:</label>
-          <input
-            type="text"
-            value={curAnimal.stock}
-            onChange={(e) =>
-              setCurAnimal((prev) => ({ ...prev, stock: e.target.value }))
-            }
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Habitat:</label>
-          <select
-            value={curAnimal.habitat}
-            onChange={(e) =>
-              setCurAnimal((prev) => ({ ...prev, habitat: e.target.value }))
-            }
-            className={styles.select}
-          >
-            <option value="universal">Universal</option>
-            <option value="europe">Europe</option>
-            <option value="asia">Asia</option>
-            <option value="africa">Africa</option>
-            <option value="australiaAndOceania">Australia and Oceania</option>
-            <option value="americas">Americas</option>
-            <option value="antarctica">Antarctica</option>
-            <option value="arctic">Arctic</option>
-          </select>
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Domestic:</label>
-          <div className={styles.checkboxWrapper}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Price:</label>
             <input
-              type="checkbox"
-              id="domestic"
-              checked={curAnimal.domestic}
+              type="text"
+              value={curAnimal.price}
               onChange={(e) =>
-                setCurAnimal((prev) => ({
-                  ...prev,
-                  domestic: e.target.checked,
-                }))
+                setCurAnimal((prev) => ({ ...prev, price: e.target.value }))
               }
-              className={styles.checkbox}
+              className={styles.input}
             />
-            <label htmlFor="domestic" className={styles.customCheckbox}></label>
-            <label htmlFor="domestic" className={styles.checkboxLabel}>
-              Domestic
-            </label>
           </div>
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Carnivore:</label>
-          <div className={styles.checkboxWrapper}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Is the animal popular:</label>
+            <div className={styles.checkboxWrapper}>
+              <input
+                type="checkbox"
+                id="isPopular"
+                checked={curAnimal.isPopular}
+                onChange={(e) =>
+                  setCurAnimal((prev) => ({
+                    ...prev,
+                    isPopular: e.target.checked,
+                  }))
+                }
+                className={styles.checkbox}
+              />
+              <label
+                htmlFor="isPopular"
+                className={styles.customCheckbox}
+              ></label>
+              <label htmlFor="isPopular" className={styles.checkboxLabel}>
+                Popular
+              </label>
+            </div>
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Stock:</label>
             <input
-              type="checkbox"
-              id="carnivore"
-              checked={curAnimal.carnivore}
+              type="text"
+              value={curAnimal.stock}
               onChange={(e) =>
-                setCurAnimal((prev) => ({
-                  ...prev,
-                  carnivore: e.target.checked,
-                }))
+                setCurAnimal((prev) => ({ ...prev, stock: e.target.value }))
               }
-              className={styles.checkbox}
+              className={styles.input}
             />
-            <label
-              htmlFor="carnivore"
-              className={styles.customCheckbox}
-            ></label>
-            <label htmlFor="carnivore" className={styles.checkboxLabel}>
-              Carnivore
-            </label>
           </div>
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Endangered:</label>
-          <div className={styles.checkboxWrapper}>
-            <input
-              type="checkbox"
-              id="endangered"
-              checked={curAnimal.endangered}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Habitat:</label>
+            <select
+              value={curAnimal.habitat}
               onChange={(e) =>
-                setCurAnimal((prev) => ({
-                  ...prev,
-                  endangered: e.target.checked,
-                }))
+                setCurAnimal((prev) => ({ ...prev, habitat: e.target.value }))
               }
-              className={styles.checkbox}
-            />
-            <label
-              htmlFor="endangered"
-              className={styles.customCheckbox}
-            ></label>
-            <label htmlFor="endangered" className={styles.checkboxLabel}>
-              Endangered
-            </label>
+              className={styles.select}
+            >
+              <option value="universal">Universal</option>
+              <option value="europe">Europe</option>
+              <option value="asia">Asia</option>
+              <option value="africa">Africa</option>
+              <option value="australiaAndOceania">Australia and Oceania</option>
+              <option value="americas">Americas</option>
+              <option value="antarctica">Antarctica</option>
+              <option value="arctic">Arctic</option>
+            </select>
           </div>
-        </div>
-        {error && <div className={styles.error}>{error}</div>}
-        <button type="submit" className={styles.button}>
-          Submit
-        </button>
-      </form>
-    </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Domestic:</label>
+            <div className={styles.checkboxWrapper}>
+              <input
+                type="checkbox"
+                id="domestic"
+                checked={curAnimal.domestic}
+                onChange={(e) =>
+                  setCurAnimal((prev) => ({
+                    ...prev,
+                    domestic: e.target.checked,
+                  }))
+                }
+                className={styles.checkbox}
+              />
+              <label
+                htmlFor="domestic"
+                className={styles.customCheckbox}
+              ></label>
+              <label htmlFor="domestic" className={styles.checkboxLabel}>
+                Domestic
+              </label>
+            </div>
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Carnivore:</label>
+            <div className={styles.checkboxWrapper}>
+              <input
+                type="checkbox"
+                id="carnivore"
+                checked={curAnimal.carnivore}
+                onChange={(e) =>
+                  setCurAnimal((prev) => ({
+                    ...prev,
+                    carnivore: e.target.checked,
+                  }))
+                }
+                className={styles.checkbox}
+              />
+              <label
+                htmlFor="carnivore"
+                className={styles.customCheckbox}
+              ></label>
+              <label htmlFor="carnivore" className={styles.checkboxLabel}>
+                Carnivore
+              </label>
+            </div>
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Endangered:</label>
+            <div className={styles.checkboxWrapper}>
+              <input
+                type="checkbox"
+                id="endangered"
+                checked={curAnimal.endangered}
+                onChange={(e) =>
+                  setCurAnimal((prev) => ({
+                    ...prev,
+                    endangered: e.target.checked,
+                  }))
+                }
+                className={styles.checkbox}
+              />
+              <label
+                htmlFor="endangered"
+                className={styles.customCheckbox}
+              ></label>
+              <label htmlFor="endangered" className={styles.checkboxLabel}>
+                Endangered
+              </label>
+            </div>
+          </div>
+          {error && <div className={styles.error}>{error}</div>}
+          <button type="submit" className={styles.button}>
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
   );
 }

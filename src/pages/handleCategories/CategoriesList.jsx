@@ -4,7 +4,9 @@ import { getCategories } from "./categories.thunks";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../Spinner";
-import styles from "./CategoriesList.module.css"; // Import the CSS module
+import styles from "./CategoriesList.module.css";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function CategoriesList() {
   const categoriesState = useSelector((state) => state.ca);
@@ -13,7 +15,7 @@ export default function CategoriesList() {
   const dispatch = useDispatch();
 
   function deleteCategory(category) {
-    fetch(`/api/v1/categories/${category}`, {
+    fetch(`${API_URL}/api/v1/categories/${category}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

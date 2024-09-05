@@ -32,6 +32,11 @@ export default function WishList() {
   );
 
   const handleAddToCart = (animalName) => {
+    const ka = cartState.animals.find((an) => an.name === animalName);
+    if (ka.stock < 1) {
+      alert("The animal is out of stock, it can not be added to cart");
+      return;
+    }
     addToCartList(animalName);
     removeFromWishlist(animalName);
     navigate("/cart");
