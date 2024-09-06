@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const getCategories = createAsyncThunk(
   "/categories/getCategory",
@@ -9,7 +10,7 @@ export const getCategories = createAsyncThunk(
       const res = await fetch(`${API_URL}/api/v1/categories`, {
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          authorization: `Bearer ${API_KEY}`,
         },
       });
       const data = await res.json();
@@ -24,7 +25,7 @@ const fetchCategories = async () => {
   const response = await fetch(`${API_URL}/api/v1/categories`, {
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+      authorization: `Bearer ${API_KEY}`,
     },
   });
   if (!response.ok) {
@@ -55,7 +56,7 @@ export const postCategory = createAsyncThunk(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify([newCategory]),
       });
@@ -86,7 +87,7 @@ export const updateCategory = createAsyncThunk(
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+            Authorization: `Bearer ${API_KEY}`,
           },
           body: JSON.stringify(updatedCategory),
         }

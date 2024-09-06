@@ -7,6 +7,7 @@ import Spinner from "../Spinner";
 import styles from "./AnimalsList.module.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function AnimalsList() {
   const animalsState = useSelector((state) => state.an);
@@ -19,7 +20,7 @@ export default function AnimalsList() {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
       },
     })
       .then((response) => {

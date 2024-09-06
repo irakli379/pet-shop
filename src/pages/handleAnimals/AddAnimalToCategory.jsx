@@ -5,6 +5,7 @@ import styles from "./AddAnimalToCategory.module.css";
 import PageNav from "../PageNav";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function AddAnimalToCategory() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +33,7 @@ export default function AddAnimalToCategory() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        authorization: `Bearer ${API_KEY}`,
       },
     })
       .then((res) => {
@@ -61,7 +62,7 @@ export default function AddAnimalToCategory() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
       },
     })
       .then((res) => {
@@ -96,7 +97,7 @@ export default function AddAnimalToCategory() {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
         animals: [...categoryId.animals, curAnimal.name],

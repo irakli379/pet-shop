@@ -7,6 +7,7 @@ import { updateCategory } from "./categories.thunks";
 import styles from "./CategoryInfo.module.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function CategoryInfo() {
   const cartState = useSelector((state) => state.cart);
@@ -32,7 +33,7 @@ export default function CategoryInfo() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
       },
     })
       .then((res) => {

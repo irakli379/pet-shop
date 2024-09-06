@@ -6,6 +6,7 @@ import { updateCategory } from "./categories.thunks";
 import styles from "./UpdateCategory.module.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function UpdateCategory() {
   const [curCategory, setCurCategory] = useState({
@@ -27,7 +28,7 @@ export default function UpdateCategory() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
       },
     })
       .then((res) => {

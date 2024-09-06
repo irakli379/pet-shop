@@ -9,6 +9,7 @@ import styles from "./Cart.module.css";
 import Modal from "./Modal";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function Cart() {
   const cartState = useSelector((state) => state.cart);
@@ -52,7 +53,7 @@ export default function Cart() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({ stock: animal.stock - animal.count }),
       });

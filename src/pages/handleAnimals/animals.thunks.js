@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const getAnimals = createAsyncThunk(
   "/animals/getAnimal",
@@ -9,7 +10,7 @@ export const getAnimals = createAsyncThunk(
       const res = await fetch(`${API_URL}/api/v1/animals`, {
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          authorization: `Bearer ${API_KEY}`,
         },
       });
       const data = await res.json();
@@ -24,7 +25,7 @@ const fetchAnimals = async () => {
   const response = await fetch(`${API_URL}/api/v1/animals`, {
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+      authorization: `Bearer ${API_KEY}`,
     },
   });
   if (!response.ok) {
@@ -54,7 +55,7 @@ export const postAnimal = createAsyncThunk(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify([newAnimal]),
       });
@@ -84,7 +85,7 @@ export const updateAnimal = createAsyncThunk(
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+            Authorization: `Bearer ${API_KEY}`,
           },
           body: JSON.stringify(updatedAnimal),
         }
