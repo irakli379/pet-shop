@@ -4,7 +4,7 @@ import PageNav from "./PageNav";
 import { loginToggle } from "./handleCart/cartSlice";
 import styles from "./MainPage.module.css";
 
-export default function MainPage() {
+export default function MainPagePets() {
   const cartState = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 

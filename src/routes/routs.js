@@ -6,7 +6,7 @@ import AddCategory from "../pages/handleCategories/AddCategory";
 import CategoryInfo from "../pages/handleCategories/CategoryInfo";
 import UpdateCategory from "../pages/handleCategories/UpdateCategory";
 import UpdateAnimal from "../pages/handleAnimals/UpdateAnimal";
-import MainPage from "../pages/MainPage";
+import MainPagePets from "../pages/MainPagePets";
 import AddAnimalToCategory from "../pages/handleAnimals/AddAnimalToCategory";
 import AboutUs from "../pages/AboutUs";
 import Donate from "../pages/Donate";
@@ -19,7 +19,7 @@ const routes = [
     path: "/animalsList",
   },
   {
-    element: <MainPage />,
+    element: <MainPagePets />,
     path: "/",
   },
   {
