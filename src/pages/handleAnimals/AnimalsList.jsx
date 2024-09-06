@@ -49,7 +49,7 @@ export default function AnimalsList() {
         <Spinner />
       ) : (
         <div className={styles.animalList}>
-          {animalsState.animals.length > 0 ? (
+          {animalsState.animals && animalsState.animals.length > 0 ? (
             animalsState.animals.map((cf) => (
               <div key={cf._uuid} className={styles.animalCard}>
                 <h3>{cf.name}</h3>
